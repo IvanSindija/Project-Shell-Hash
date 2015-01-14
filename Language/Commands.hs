@@ -23,13 +23,6 @@ getVarFromString :: VarTable -> String -> String -> String
 getVarFromString vt [s,v] acc = if s=='$' then (acc++(getVar [v] vt)) else (acc++[s,v])
 getVarFromString vt (s:v:rs) acc = if s=='$' then (getVarFromString vt rs (acc++(getVar [v] vt))) else (getVarFromString vt (v:rs) (acc++[s]))
 
-
---concatMap (\(f,s) -> if odd s then (getVar f vt) else f) $ findVars str 0
-  --where findVars "" i = [("",i)]
-    --    findVars (c:str) i
-      --    | c == '$'  = ("", i) : findVars str (i+1)
-        --  | otherwise = let ((h,ind):t) = findVars str i in (((c:h),ind):t)
- 
 getVar:: String->VarTable->String
 getVar str vt = fromMaybe (error "variable " ++ str ++  " does not exist\n") $ M.lookup str vt
 		
